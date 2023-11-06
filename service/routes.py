@@ -80,7 +80,7 @@ def list_all_accounts():
 ######################################################################
 
 @app.route("/accounts/<account_id>", methods=["GET"])
-def list_account_details(account_id):
+def read_account(account_id):
     """
     Lists details pertaining to an existing account in the service
     This endpoint will list details pertaining to an existing account in the service
@@ -89,7 +89,7 @@ def list_account_details(account_id):
         app.logger.info("Request to list Account details")
         account = Account.find(account_id)
 
-        if(len(account) < 1):
+        if not account:
             return make_response("", status.HTTP_404_NOT_FOUND)
 
         return account.serialize(), status.HTTP_200_OK
@@ -101,7 +101,7 @@ def list_account_details(account_id):
 ######################################################################
 
 @app.route("/accounts/<account_id>", methods=["PUT"])
-def list_account_details(account_id):
+def update_account(account_id):
     """
     Updates the details of an account in the service
     This endpoint will update the details of an account in the service
@@ -124,8 +124,8 @@ def list_account_details(account_id):
 # DELETE AN ACCOUNT
 ######################################################################
 
-@app.route("/accounts/<account_id>", methods=["PUT"])
-def list_account_details(account_id):
+@app.route("/accounts/<account_id>", methods=["DELETE"])
+def delete_account(account_id):
     """
     Updates the details of an account in the service
     This endpoint will update the details of an account in the service
