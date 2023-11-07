@@ -126,9 +126,19 @@ class TestAccountService(TestCase):
     # ADD YOUR TEST CASES HERE ...
 
     def test_read_all_accounts(self):
-        """It should return a list of all accounts"""
+        """It should return a list of created accounts. I.e. A total of 5 accounts"""
+        accounts = self._create_accounts(5)
         response = self.client.get(BASE_URL)
+        data = response.get_json()
         self.assertEqual(response.status, status.HTTP_200_OK)
+        self.assertEqual(len(data), 5)
+        
+    def test_read_all_accounts_2(self):
+        """It should return an empty list. I.e. If no account exists"""
+        response = self.client.get(BASE_URL)
+        data = response.get_json()
+        self.assertEqual(response.status, status.HTTP_200_OK)
+        self.assertEqual(len(data), 0)
 
     def test_read_an_account(self):
         """It should return the details of a single account accounts"""

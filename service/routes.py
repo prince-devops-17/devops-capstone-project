@@ -62,7 +62,7 @@ def create_accounts():
 ######################################################################
 
 @app.route("/accounts", methods=["GET"])
-def list_all_accounts():
+def read_all_accounts():
     """
     Lists all existing account in the service
     This endpoint will list all accounts existing within the service
@@ -72,7 +72,7 @@ def list_all_accounts():
         accounts = Account.all()
         return accounts, status.HTTP_200_OK
     except Exception as e:
-        return accounts, status.HTTP_200_OK
+        return make_response([], status.HTTP_200_OK)
 
 
 ######################################################################
