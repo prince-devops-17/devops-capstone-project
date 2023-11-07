@@ -146,7 +146,29 @@ class TestAccountService(TestCase):
 
     def test_update_account(self):
         """It should update the details of a single account accounts"""
-        response = self.client.get(f"{BASE_URL}/12345")
+        account = self._create_accounts(1)[0]
+        new_account_id = account.id
+        new_account_details={
+            "name": "Prince C. Onukwili",
+            "email": "test@test.com",
+            "address": "123 some street",
+            "phone_number":"090909090",
+        }
+        response = self.client.put(f"{BASE_URL}/{new_account_id}", 
+                                   json=new_account_details, 
+                                   content_type="application/json")
+        
+        updated_account = response.get_json()
+        
+        self.assertEqual(response.status, status.HTTP_200_OK)
+        self.assertEqual(updated_account["name"], new_account_details["name"])
+        self.assertEqual(updated_account["email"], new_account_details["email"])
+        self.assertEqual(updated_account["address"], new_account_details["address"])
+        self.assertEqual(updated_account["phone_number"], new_account_details["phone_number"])
+        
+    def test_update_account_2(self):
+        """It should return 404 status code if the account is not found"""
+        response = self.client.get(f"{BASE_URL}/husujhsj")
         self.assertEqual(response.status, status.HTTP_404_NOT_FOUND)
 
     def test_delete_account(self):
