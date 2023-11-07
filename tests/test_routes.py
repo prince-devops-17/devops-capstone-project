@@ -168,10 +168,16 @@ class TestAccountService(TestCase):
         
     def test_update_account_2(self):
         """It should return 404 status code if the account is not found"""
-        response = self.client.get(f"{BASE_URL}/husujhsj")
+        response = self.client.put(f"{BASE_URL}/husujhsj")
         self.assertEqual(response.status, status.HTTP_404_NOT_FOUND)
 
     def test_delete_account(self):
         """It should delete the details of a single account accounts"""
-        response = self.client.get(f"{BASE_URL}/12345")
+        account = self._create_accounts(1)[0]
+        new_account_id = account.id
+        
+        response = self.client.delete(f"{BASE_URL}/{new_account_id}")
         self.assertEqual(response.status, status.HTTP_204_NO_CONTENT)
+        
+        get_response = self.client.get(f"{BASE_URL}/{new_account_id}")
+        self.assertEqual(get_response.status, status.HTTP_404_NOT_FOUND)

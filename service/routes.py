@@ -133,10 +133,7 @@ def delete_account(account_id):
     try:
         app.logger.info("Request to list Account details")
         account = Account.find(account_id)
-
-        if(len(account) > 1):
-            account.delete()
-
+        account.delete()
         return make_response("", status.HTTP_204_NO_CONTENT)
     except Exception as e:
         return make_response("", status.HTTP_204_NO_CONTENT)
