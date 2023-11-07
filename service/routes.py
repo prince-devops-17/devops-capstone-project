@@ -68,9 +68,11 @@ def read_all_accounts():
     This endpoint will list all accounts existing within the service
     """
     try:
-        app.logger.info("Request to list all Account")
+        app.logger.info("Request to list Accounts")
         accounts = Account.all()
-        return accounts, status.HTTP_200_OK
+        account_list = [account.serialize() for account in accounts]
+        app.logger.info("Returning [%s] accounts", len(account_list))
+        return jsonify(account_list), status.HTTP_200_OK
     except Exception as e:
         return make_response([], status.HTTP_200_OK)
 
