@@ -61,29 +61,85 @@ def create_accounts():
 # LIST ALL ACCOUNTS
 ######################################################################
 
-# ... place you code here to LIST accounts ...
+@app.route("/accounts", methods=["GET"])
+def list_all_accounts():
+    """
+    Lists all existing account in the service
+    This endpoint will list all accounts existing within the service
+    """
+    try:
+        app.logger.info("Request to list all Account")
+        accounts = Account.all()
+        return accounts, status.HTTP_200_OK
+    except Exception as e:
+        return accounts, status.HTTP_200_OK
 
 
 ######################################################################
 # READ AN ACCOUNT
 ######################################################################
 
-# ... place you code here to READ an account ...
+@app.route("/accounts/<account_id>", methods=["GET"])
+def read_account(account_id):
+    """
+    Lists details pertaining to an existing account in the service
+    This endpoint will list details pertaining to an existing account in the service
+    """
+    try:
+        app.logger.info("Request to list Account details")
+        account = Account.find(account_id)
 
+        if not account:
+            return make_response("", status.HTTP_404_NOT_FOUND)
+
+        return account.serialize(), status.HTTP_200_OK
+    except Exception as e:
+        return make_response("", status.HTTP_404_NOT_FOUND)
 
 ######################################################################
 # UPDATE AN EXISTING ACCOUNT
 ######################################################################
 
-# ... place you code here to UPDATE an account ...
+@app.route("/accounts/<account_id>", methods=["PUT"])
+def update_account(account_id):
+    """
+    Updates the details of an account in the service
+    This endpoint will update the details of an account in the service
+    """
+    try:
+        app.logger.info("Request to list Account details")
+        account = Account.find(account_id)
 
+        if(len(account) < 1):
+            return make_response("", status.HTTP_404_NOT_FOUND)
+        
+        account.deserialize(request.get_json())
+        account.update()
+
+        return make_response(account.serialize(), status.HTTP_200_OK)
+    except Exception as e:
+        return make_response("", status.HTTP_404_NOT_FOUND)
 
 ######################################################################
 # DELETE AN ACCOUNT
 ######################################################################
 
-# ... place you code here to DELETE an account ...
+@app.route("/accounts/<account_id>", methods=["DELETE"])
+def delete_account(account_id):
+    """
+    Updates the details of an account in the service
+    This endpoint will update the details of an account in the service
+    """
+    try:
+        app.logger.info("Request to list Account details")
+        account = Account.find(account_id)
 
+        if(len(account) > 1):
+            account.delete()
+
+        return make_response("", status.HTTP_204_NO_CONTENT)
+    except Exception as e:
+        return make_response("", status.HTTP_204_NO_CONTENT)
 
 ######################################################################
 #  U T I L I T Y   F U N C T I O N S
