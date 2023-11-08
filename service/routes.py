@@ -61,6 +61,7 @@ def create_accounts():
 # LIST ALL ACCOUNTS
 ######################################################################
 
+
 @app.route("/accounts", methods=["GET"])
 def read_all_accounts():
     """
@@ -73,7 +74,7 @@ def read_all_accounts():
         account_list = [account.serialize() for account in accounts]
         app.logger.info("Returning [%s] accounts", len(account_list))
         return jsonify(account_list), status.HTTP_200_OK
-    except Exception as e:
+    except Exception:
         return make_response([], status.HTTP_200_OK)
 
 
@@ -95,12 +96,13 @@ def read_account(account_id):
             return make_response("", status.HTTP_404_NOT_FOUND)
 
         return account.serialize(), status.HTTP_200_OK
-    except Exception as e:
+    except Exception:
         return make_response("", status.HTTP_404_NOT_FOUND)
 
 ######################################################################
 # UPDATE AN EXISTING ACCOUNT
 ######################################################################
+
 
 @app.route("/accounts/<account_id>", methods=["PUT"])
 def update_account(account_id):
@@ -114,17 +116,18 @@ def update_account(account_id):
 
         if(not account):
             return make_response("", status.HTTP_404_NOT_FOUND)
-        
+
         account.deserialize(request.get_json())
         account.update()
 
         return make_response(account.serialize(), status.HTTP_200_OK)
-    except Exception as e:
+    except Exception:
         return make_response("", status.HTTP_404_NOT_FOUND)
 
 ######################################################################
 # DELETE AN ACCOUNT
 ######################################################################
+
 
 @app.route("/accounts/<account_id>", methods=["DELETE"])
 def delete_account(account_id):
@@ -137,7 +140,7 @@ def delete_account(account_id):
         account = Account.find(account_id)
         account.delete()
         return make_response("", status.HTTP_204_NO_CONTENT)
-    except Exception as e:
+    except Exception:
         return make_response("", status.HTTP_204_NO_CONTENT)
 
 ######################################################################

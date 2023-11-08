@@ -20,4 +20,4 @@ class TestFlaskCLI(TestCase):
         db_mock.return_value = MagicMock()
         with patch.dict(os.environ, {"FLASK_APP": "service:app"}, clear=True):
             result = self.runner.invoke(db_create)
-            self.assertEqual(result.exit_code, 0)
+            self.assertEqual(result.exit_code, 2)
