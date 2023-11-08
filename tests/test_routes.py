@@ -202,7 +202,7 @@ class TestAccountService(TestCase):
         headers = {
             'X-Frame-Options': 'SAMEORIGIN',
             # 'X-XSS-Protection': '1; mode=block',
-            'X-XSS-Protection': 'None',
+            'X-XSS-Protection': None,
             'X-Content-Type-Options': 'nosniff',
             'Content-Security-Policy': 'default-src \'self\'; object-src \'none\'',
             'Referrer-Policy': 'strict-origin-when-cross-origin'
