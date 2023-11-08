@@ -130,14 +130,14 @@ class TestAccountService(TestCase):
         accounts = self._create_accounts(5)
         response = self.client.get(BASE_URL)
         data = response.get_json()
-        self.assertEqual(response.status, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(data), 5)
         
     def test_read_all_accounts_2(self):
         """It should return an empty list. I.e. If no account exists"""
         response = self.client.get(BASE_URL)
         data = response.get_json()
-        self.assertEqual(response.status, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(data), 0)
 
     def test_read_an_account(self):
@@ -145,14 +145,14 @@ class TestAccountService(TestCase):
         account = self._create_accounts(1)[0]
         new_account_id = account.id
         response = self.client.get(f"{BASE_URL}/{new_account_id}")
-        self.assertEqual(response.status, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         resp_data = response.get_json()
         self.assertEqual(account.name, resp_data["name"])
 
     def test_read_an_account_2(self):
         """It should return 404 status code if the account is not found"""
         response = self.client.get(f"{BASE_URL}/husujhsj")
-        self.assertEqual(response.status, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_update_account(self):
         """It should update the details of a single account accounts"""
@@ -170,7 +170,7 @@ class TestAccountService(TestCase):
         
         updated_account = response.get_json()
         
-        self.assertEqual(response.status, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(updated_account["name"], new_account_details["name"])
         self.assertEqual(updated_account["email"], new_account_details["email"])
         self.assertEqual(updated_account["address"], new_account_details["address"])
@@ -179,7 +179,7 @@ class TestAccountService(TestCase):
     def test_update_account_2(self):
         """It should return 404 status code if the account is not found"""
         response = self.client.put(f"{BASE_URL}/husujhsj")
-        self.assertEqual(response.status, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_delete_account(self):
         """It should delete the details of a single account accounts"""
@@ -187,7 +187,7 @@ class TestAccountService(TestCase):
         new_account_id = account.id
         
         response = self.client.delete(f"{BASE_URL}/{new_account_id}")
-        self.assertEqual(response.status, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         
         get_response = self.client.get(f"{BASE_URL}/{new_account_id}")
-        self.assertEqual(get_response.status, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(get_response.status_code, status.HTTP_404_NOT_FOUND)
