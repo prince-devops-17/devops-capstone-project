@@ -114,7 +114,7 @@ def update_account(account_id):
         app.logger.info("Request to list Account details")
         account = Account.find(account_id)
 
-        if(not account):
+        if (not account):
             return make_response("", status.HTTP_404_NOT_FOUND)
 
         account.deserialize(request.get_json())
