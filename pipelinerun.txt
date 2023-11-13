@@ -446,7 +446,7 @@
 [build : build-and-push] Writing manifest to image destination
 [build : build-and-push] Storing signatures
 [build : build-and-push] sha256:704d1d384094b4696716445d37400242d87bf00e369152d21971d7053b76471dimage-registry.openshift-image-registry.svc:5000/sn-labs-onukwilip/accounts:1
-
+ 
 [deploy : oc] Updating manifest...
 [deploy : oc] apiVersion: apps/v1
 [deploy : oc] kind: Deployment
