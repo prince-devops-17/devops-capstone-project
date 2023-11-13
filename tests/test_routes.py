@@ -130,6 +130,7 @@ class TestAccountService(TestCase):
 
     def test_read_all_accounts(self):
         """It should return a list of created accounts. I.e. A total of 5 accounts"""
+        self._create_accounts(5)
         response = self.client.get(BASE_URL)
         data = response.get_json()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
